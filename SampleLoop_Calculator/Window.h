@@ -3,10 +3,25 @@
 #pragma once
 
 #include <Windows.h>
+#include "GTException.h"
 
 // Encapsulates the creation and destruction of the window and handles messages.
 class Window
 {
+public:
+	class Exception : public GTException
+	{
+	public:
+		Exception(int line, const char* file, HRESULT hr) noexcept;
+		const char* what() const noexcept override;
+		virtual const char* GetType() const noexcept;
+		static std::string TranslateErrorCode(HRESULT hr) noexcept;
+		HRESULT GetErrorCode() const noexcept;
+		std::string GetErrorString() const noexcept;
+	private:
+		HRESULT hr;
+	};
+
 private:
 	// Singleton that manages the registration and cleanup of window class.
 	class WindowClass
@@ -24,7 +39,7 @@ private:
 		HINSTANCE hInst;	// Stores the handle to the instance.
 	};
 public:
-	Window(int width, int height, const char* name) noexcept; // Constructs the window.
+	Window(int width, int height, const char* name); // Constructs the window.
 	~Window();	// Destroys the window.
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
@@ -43,3 +58,7 @@ private:
 	int height;
 	HWND hWnd;	// The handle to the window.
 };
+
+// Error exception helper macros.
+#define GTWND_EXCEPT( hr ) Window::Exception( __LINE__,__FILE__,hr )
+#define GTWND_LAST_EXCEPT() Window::Exception( __LINE__,__FILE__,GetLastError() )
