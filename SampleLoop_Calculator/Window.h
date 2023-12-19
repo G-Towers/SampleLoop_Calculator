@@ -3,7 +3,11 @@
 #pragma once
 
 #include <Windows.h>
+//#include "Widget.h"
 #include "GTException.h"
+
+static BOOL bMsgRed = 0;
+
 
 // Encapsulates the creation and destruction of the window and handles messages.
 class Window

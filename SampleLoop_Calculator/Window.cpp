@@ -1,6 +1,8 @@
 // Window.cpp
 
 #include "Window.h"
+#include "Widget.h"
+#include "CalcFunctions.h"
 #include <sstream>
 #include "resource.h"
 
@@ -20,7 +22,7 @@ Window::WindowClass::WindowClass() noexcept
 	wc.hInstance = GetInstance();
 	wc.hIcon = static_cast<HICON>(LoadImage(hInst, MAKEINTRESOURCE(IDI_ICON2), IMAGE_ICON, 256, 256, 0));
 	wc.hCursor = nullptr;
-	wc.hbrBackground = nullptr;
+	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW);
 	wc.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1);
 	wc.lpszClassName = GetName();
 	wc.hIconSm = static_cast<HICON>(LoadImage(hInst, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0));;
@@ -117,6 +119,10 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 {
 	switch (msg)
 	{
+	case WM_CREATE:
+		Widget::Interface(hWnd, WindowClass::GetInstance());
+		break;
+
 		// We don't want the DefProc to handle this message because
 		// we want our destructor to destroy the window, so return 0 instead of break.
 	case WM_CLOSE:

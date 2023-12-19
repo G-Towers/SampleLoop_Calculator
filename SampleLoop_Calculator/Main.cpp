@@ -2,6 +2,7 @@
 
 #include "Window.h"
 
+
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -11,7 +12,7 @@ int CALLBACK WinMain(
     try
     {
         // Instantiate the window.
-        Window wnd(330, 475, "Sample Loop Calculator");
+        Window wnd(315, 515, "Sample Loop Calculator");
 
         // The message loop.
         MSG msg;
@@ -30,7 +31,7 @@ int CALLBACK WinMain(
 		}
 
 		// wParam here is the value passed to PostQuitMessage
-		return msg.wParam;
+		return (int)msg.wParam;
 	}
 	catch (const GTException& e)
 	{
