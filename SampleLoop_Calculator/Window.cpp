@@ -21,7 +21,7 @@ Window::WindowClass::WindowClass() noexcept
 	wc.hIcon = static_cast<HICON>(LoadImage(hInst, MAKEINTRESOURCE(IDI_ICON2), IMAGE_ICON, 256, 256, 0));
 	wc.hCursor = nullptr;
 	wc.hbrBackground = nullptr;
-	wc.lpszMenuName = nullptr;
+	wc.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1);
 	wc.lpszClassName = GetName();
 	wc.hIconSm = static_cast<HICON>(LoadImage(hInst, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0));;
 	RegisterClassEx(&wc);
