@@ -18,10 +18,24 @@ int CALLBACK WinMain(
         MSG msg;
         BOOL gResult;
 
+		// Register Hot Keys.
+		RegisterHotKey(NULL, ESC_HOTKEY, MOD_NOREPEAT, VK_ESCAPE);
+
         while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
         {
-            TranslateMessage(&msg); // translate virtual-key messages into character messages.
-            DispatchMessage(&msg);  // Send message to windows procedure.
+			// Hot Keys.
+			if (msg.wParam == ESC_HOTKEY)
+			{
+				return 0;
+				//MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
+			}
+
+			if (!IsDialogMessage(wnd.GetHWND(), &msg))
+			{
+				TranslateMessage(&msg); // translate virtual-key messages into character messages.
+				DispatchMessage(&msg);  // Send message to windows procedure.
+			}
+            
         }
 
 		// check if GetMessage call itself borked

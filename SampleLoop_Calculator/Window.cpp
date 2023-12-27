@@ -1,10 +1,51 @@
 // Window.cpp
 
 #include "Window.h"
-#include "Widget.h"
-#include "CalcFunctions.h"
 #include <sstream>
-#include "resource.h"
+
+
+
+// Message handler for about box.
+INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+
+	}
+	return (INT_PTR)FALSE;
+}
+
+// Message handler for Info box.
+INT_PTR CALLBACK Info(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+
+	}
+	return (INT_PTR)FALSE;
+}
 
 // Register the window class.
 Window::WindowClass Window::WindowClass::wndClass;
@@ -117,17 +158,100 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
+
 	switch (msg)
 	{
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+		// Parse the menu selections:
+		switch (wmId)
+		{
+		case IDD_DIALOG1:
+			DialogBox(WindowClass::GetInstance(), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, About);
+			break;
+
+		case IDD_DIALOG2:
+			DialogBox(WindowClass::GetInstance(), MAKEINTRESOURCE(IDD_DIALOG2), hWnd, Info);
+			break;
+
+		case IDM_EXIT:
+			if (MessageBox(hWnd, " Are you sure you want to quit?", "Quit?", MB_OKCANCEL | MB_ICONEXCLAMATION) == IDOK)
+			{
+				DestroyWindow(hWnd);
+			}
+			break;
+
+		case CLEAR_BUTTON:
+			CalcFunctions::ClearAllText(widg);
+			break;
+
+		case CALCULATE_BUTTON:
+			CalcFunctions::CalcLength(widg);
+			break;
+
+		default:
+			return DefWindowProc(hWnd, msg, wParam, lParam);
+		}
+	}
+	break;
+
 	case WM_CREATE:
-		Widget::Interface(hWnd, WindowClass::GetInstance());
+		widg.Interface(hWnd, WindowClass::GetInstance());
 		break;
 
-		// We don't want the DefProc to handle this message because
-		// we want our destructor to destroy the window, so return 0 instead of break.
+	case WM_SETFOCUS:
+		SetFocus(Window::widg.hVol);
+		break;
+
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_ESCAPE:
+			//PostQuitMessage(EXIT_SUCCESS);
+			MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
+			break;
+		}
+
+		return 0;
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (widg.bMsgRed && (HWND)lParam == GetDlgItem(hWnd, ID_MSGBOX))
+		{
+			SetBkColor((HDC)wParam, GetSysColor(COLOR_MENU));
+			SetTextColor((HDC)wParam, RGB(230, 0, 0));
+
+
+			return (LRESULT)GetSysColorBrush(COLOR_MENU);
+		}
+
+		else if ((HWND)lParam == GetDlgItem(hWnd, ID_MSGBOX))
+		{
+			SetBkColor((HDC)wParam, GetSysColor(COLOR_MENU));
+			SetTextColor((HDC)wParam, RGB(0, 160, 0));
+
+
+			return (LRESULT)GetSysColorBrush(COLOR_MENU);
+		}
+	}
+
+	break;
+
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
+		// TODO: Add any drawing code that uses hdc here...
+		EndPaint(hWnd, &ps);
+	}
+	break;
+
 	case WM_CLOSE:
 		PostQuitMessage(0);
-		return 0;
+		return 0;	// Return 0 instead of break to destroy the window using the destructor
+					// and not let DefProc handle this message.
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);

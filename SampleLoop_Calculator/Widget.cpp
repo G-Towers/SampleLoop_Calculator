@@ -2,6 +2,8 @@
 
 #include "Widget.h"
 
+Widget::Widget()
+{}
 
 HWND Widget::RLabel(int posx, int posy, int width, int height, const char* text, HWND hWnd)
 {
@@ -63,13 +65,13 @@ HWND Widget::ComboBox(int posx, int posy, int width, int height, const char* tex
 	return hWnd;
 }
 
-HWND Widget::Button(int posx, int posy, int width, int height, const char* text, HWND hWnd)
+HWND Widget::Button(int posx, int posy, int width, int height, const char* text, HWND hWnd, HMENU option)
 {
 	hWnd = CreateWindow(
 		"BUTTON",
 		text,
 		WS_TABSTOP | WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_PUSHBUTTON,
-		posx, posy, width, height, hWnd, nullptr/*(HMENU)CLEAR_BUTTON*/, nullptr, nullptr);
+		posx, posy, width, height, hWnd, option, nullptr, nullptr);
 
 	return hWnd;
 }
@@ -89,7 +91,7 @@ HWND Widget::MsgBox(int posx, int posy, int width, int height, HWND hWnd)
 	CreateWindowEx(
 		WS_EX_CLIENTEDGE, "static", "",
 		WS_VISIBLE | WS_CHILD,
-		posx, posy, width, height, hWnd, nullptr/*(HMENU)ID_MSGBOX*/, nullptr, nullptr);
+		posx, posy, width, height, hWnd, (HMENU)ID_MSGBOX, nullptr, nullptr);
 
 	return HWND();
 }
@@ -99,18 +101,18 @@ void Widget::Interface(HWND hWnd, HINSTANCE hInst)
 	// Call Widget functions to draw the interface. 
 	GroupBox(15, 10, 285, 220, "Volume and ID Information", hWnd, hInst);
 	RLabel(45, 50, 120, 30, "Enter Volume in Cubic Centemeters: ", hWnd);
-	HWND hVol = InputBox(180, 55, 100, 25, hWnd);
+	hVol = InputBox(180, 55, 100, 25, hWnd);
 	LLabel(25, 100, 220, 30, "Select Tubing: ", hWnd);
-	HWND hTubeComboBox = ComboBox(25, 120, 265, 150, "", hWnd, hInst);
+	hTubeComboBox = ComboBox(25, 120, 265, 150, "", hWnd, hInst);
 	RLabel(20, 170, 150, 30, "Enter inside diameter of tube in inches: ", hWnd);
-	HWND hID = InputBox(180, 175, 100, 25, hWnd);
-	HWND hClrBtn = Button(15, 255, 100, 30, "Clear", hWnd);
-	HWND hCalcBtn = Button(200, 255, 100, 30, "Calculate", hWnd);
+	hID = InputBox(180, 175, 100, 25, hWnd);
+	hClrBtn = Button(15, 255, 100, 30, "Clear", hWnd, (HMENU)CLEAR_BUTTON);
+	hCalcBtn = Button(200, 255, 100, 30, "Calculate", hWnd, (HMENU)CALCULATE_BUTTON);
 	GroupBox(15, 305, 285, 175, "Sample Loop Results", hWnd, hInst);
 	RLabel(20, 350, 120, 60, "The length of your sample loop is: ", hWnd);
-	HWND hLength = ResultBox(150, 355, 80, 25, hWnd);
+	hLength = ResultBox(150, 355, 80, 25, hWnd);
 	LLabel(240, 365, 50, 25, "inches.", hWnd);
-	HWND hMsgBox = MsgBox(30, 415, 255, 40, hWnd);
+	hMsgBox = MsgBox(30, 415, 255, 40, hWnd);
 
 }
 
