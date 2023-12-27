@@ -6,6 +6,10 @@
 #include "GTException.h"
 #include "resource.h"
 
+// Global variables.
+extern HWND hVol, hID, hClrBtn, hCalcBtn, hLength, hMsgBox, hTubeComboBox;	
+extern BOOL bMsgRed;
+
 
 // Dialog Box Procs
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);

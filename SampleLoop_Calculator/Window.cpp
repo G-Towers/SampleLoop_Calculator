@@ -4,12 +4,9 @@
 #include "Widget.h"
 #include <sstream>
 
-// Global variables.
-HWND hVol, hTubeComboBox, hID, hClrBtn, hCalcBtn, hLength, hMsgBox;
+// Define global variables for linker to see them.
+HWND hVol, hID, hClrBtn, hCalcBtn, hLength, hMsgBox, hTubeComboBox;
 BOOL bMsgRed = 0;
-const double CONVERSION_FACTOR = 0.06102374;	// Converts cubic centimeters to cubic inches (1cc in ci).
-const double PI = 3.141592654;	// Pi.
-
 
 // Message handler for about box.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
@@ -205,9 +202,12 @@ void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 
 double ComputeLength(double vol, double id)
 {
+	const double conversionFactor = 0.06102374;	// Converts cubic centimeters to cubic inches (1cc in ci).
+	const double pi = 3.141592654;	// Pi.
+
 	double result;
 
-	result = (vol * CONVERSION_FACTOR) / (PI * ((id / 2) * (id / 2)));
+	result = (vol * conversionFactor) / (pi * ((id / 2) * (id / 2)));
 
 	return result;
 
@@ -343,12 +343,43 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
+	LRESULT result = 0;
+	bool wasHandled = false;
+	int wmId = LOWORD(wParam);
+	char eighthTube[100] = "0.0625";
+	char sixteenthTube[100] = "0.040";
+	char empty[100] = "";
 
 	switch (msg)
 	{
 	case WM_COMMAND:
 	{
-		int wmId = LOWORD(wParam);
+
+		// ComboBox
+		if (HIWORD(wParam) == CBN_SELCHANGE)
+			// If the user makes a selection from the list:
+			//   Send CB_GETCURSEL message to get the index of the selected list item.
+			//   Send CB_GETLBTEXT message to get the item.
+			//   Display the item in a messagebox.
+		{
+			int ItemIndex = SendMessage((HWND)lParam, (UINT)CB_GETCURSEL,
+				(WPARAM)0, (LPARAM)0);
+			TCHAR  ListItem[256];
+			(TCHAR)SendMessage((HWND)lParam, (UINT)CB_GETLBTEXT,
+				(WPARAM)ItemIndex, (LPARAM)ListItem);
+			//MessageBox(hWnd, (LPCWSTR)ListItem, _T("Item Selected"), MB_OK);
+			if (ItemIndex == (WPARAM)0)
+				SetWindowTextA(hID, eighthTube);
+			else if (ItemIndex == (WPARAM)1)
+				SetWindowTextA(hID, sixteenthTube);
+			else
+				SetWindowTextA(hID, empty);
+
+		}
+
+		wasHandled = true;
+		result = 0;
+
 		// Parse the menu selections:
 		switch (wmId)
 		{
@@ -389,14 +420,15 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		SetFocus(hVol);
 		break;
 
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_ESCAPE:
-			//PostQuitMessage(EXIT_SUCCESS);
-			MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
-			break;
-		}
+	// Only works when focus is on main window.
+	//case WM_KEYDOWN:
+	//	switch (wParam)
+	//	{
+	//	case VK_ESCAPE:
+	//		//PostQuitMessage(EXIT_SUCCESS);
+	//		MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
+	//		break;
+	//	}
 
 		return 0;
 
