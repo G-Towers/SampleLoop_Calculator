@@ -2,7 +2,6 @@
 
 #include "Window.h"
 
-
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -30,7 +29,7 @@ int CALLBACK WinMain(
 				//MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
 			}
 
-			if (!IsDialogMessage(wnd.GetHWND(), &msg))
+			if (!IsDialogMessage(wnd.GetWinHandle(), &msg))
 			{
 				TranslateMessage(&msg); // translate virtual-key messages into character messages.
 				DispatchMessage(&msg);  // Send message to windows procedure.

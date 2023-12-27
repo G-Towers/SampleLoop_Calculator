@@ -3,20 +3,20 @@
 #pragma once
 
 #include <Windows.h>
-#include "Widget.h"
-#include "CalcFunctions.h"
 #include "GTException.h"
 #include "resource.h"
-
-
-// Static Global variables.
-//static BOOL bMsgRed = 0;
 
 
 // Dialog Box Procs
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Info(HWND, UINT, WPARAM, LPARAM);
 
+// Helper functions.
+void Interface(HWND hWnd, HINSTANCE hInst);
+int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox, BOOL bMsgRed);
+void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
+double ComputeLength(double vol, double id);
+std::string ToString(double);
 
 // Encapsulates the creation and destruction of the window and handles messages.
 class Window
@@ -56,6 +56,7 @@ public:
 	~Window();	// Destroys the window.
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
+	static HWND GetWinHandle() noexcept;
 
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -70,8 +71,9 @@ private:
 private:
 	int width;
 	int height;
+	//static Window wnd;
 	HWND hWnd;	// The handle to the window.
-	Widget widg;
+
 };
 
 // Error exception helper macros.

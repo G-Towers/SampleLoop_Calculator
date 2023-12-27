@@ -1,8 +1,14 @@
 // Window.cpp
 
 #include "Window.h"
+#include "Widget.h"
 #include <sstream>
 
+// Global variables.
+HWND hVol, hTubeComboBox, hID, hClrBtn, hCalcBtn, hLength, hMsgBox;
+BOOL bMsgRed = 0;
+const double CONVERSION_FACTOR = 0.06102374;	// Converts cubic centimeters to cubic inches (1cc in ci).
+const double PI = 3.141592654;	// Pi.
 
 
 // Message handler for about box.
@@ -45,6 +51,180 @@ INT_PTR CALLBACK Info(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 	}
 	return (INT_PTR)FALSE;
+}
+
+void Interface(HWND hWnd, HINSTANCE hInst)
+{
+	// Call Widget functions to draw the interface. 
+	Widget::GroupBox(15, 10, 285, 220, "Volume and ID Information", hWnd, hInst);
+	Widget::RLabel(45, 50, 120, 30, "Enter Volume in Cubic Centemeters: ", hWnd);
+	hVol = Widget::InputBox(180, 55, 100, 25, hWnd);
+	Widget::LLabel(25, 100, 220, 30, "Select Tubing: ", hWnd);
+	hTubeComboBox = Widget::ComboBox(25, 120, 265, 150, "", hWnd, hInst);
+	Widget::RLabel(20, 170, 150, 30, "Enter inside diameter of tube in inches: ", hWnd);
+	hID = Widget::InputBox(180, 175, 100, 25, hWnd);
+	hClrBtn = Widget::Button(15, 255, 100, 30, "Clear", hWnd, (HMENU)CLEAR_BUTTON);
+	hCalcBtn = Widget::Button(200, 255, 100, 30, "Calculate", hWnd, (HMENU)CALCULATE_BUTTON);
+	Widget::GroupBox(15, 305, 285, 175, "Sample Loop Results", hWnd, hInst);
+	Widget::RLabel(20, 350, 120, 60, "The length of your sample loop is: ", hWnd);
+	hLength = Widget::ResultBox(150, 355, 80, 25, hWnd);
+	Widget::LLabel(240, 365, 50, 25, "inches.", hWnd);
+	hMsgBox = Widget::MsgBox(30, 415, 255, 40, hWnd);
+
+}
+
+int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox, BOOL bMsgRed)
+{
+	int val;
+	double volNum, idNum, lengthNum;
+	char volText[100], idText[100], lengthText[100];
+	std::string lengthString;
+
+
+	const char* msgStandard = " A standard size.";
+	const char* msgLarge = " A very large sample loop. Make sure\n there is enough space.";
+	const char* msgTooSmall = " The sample loop is too small.";
+
+	GetWindowText(hVol, volText, 100);	// Retrieve the volume text.
+	GetWindowText(hID, idText, 100);	// Retrieve the ID text.
+
+	// Validate user input.
+	if (strcmp(volText, "") == 0 || strcmp(idText, "") == 0)
+	{
+		val = MessageBoxEx(Window::GetWinHandle(), "You are missing input!\nPlease enter both volume and inside diameter.",
+			NULL, MB_OKCANCEL | MB_ICONERROR, NULL);
+
+		switch (val)
+		{
+		case IDCANCEL:
+			DestroyWindow(Window::GetWinHandle());
+			break;
+
+		case IDOK:
+			return 0;
+			break;
+
+		}
+	}
+
+	for (size_t i = 0; i < strlen(volText); i++)
+	{
+		if (!isdigit(volText[i]) && volText[i] != '.')
+		{
+			val = MessageBoxEx(Window::GetWinHandle(), "Volume is not a valid number!\nPlease enter volume as a valid number."
+				"\nSee -- Help \\ Info-- for more information.",
+				NULL, MB_OKCANCEL | MB_ICONERROR, NULL);
+
+			switch (val)
+			{
+			case IDCANCEL:
+				DestroyWindow(Window::GetWinHandle());
+				break;
+
+			case IDOK:
+				return 0;
+				break;
+
+			}
+		}
+	}
+
+	for (size_t i = 0; i < strlen(idText); i++)
+	{
+		if (!isdigit(idText[i]) && idText[i] != '.')
+		{
+			val = MessageBoxEx(Window::GetWinHandle(), "ID is not a valid number!\nPlease enter a valid number for inside diameter."
+				"\nSee -- Help \\ Info -- for more information.",
+				NULL, MB_OKCANCEL | MB_ICONERROR, NULL);
+
+			switch (val)
+			{
+			case IDCANCEL:
+				DestroyWindow(Window::GetWinHandle());
+				break;
+
+			case IDOK:
+				return 0;
+				break;
+
+			}
+		}
+	}
+
+	// Convert  to double.
+	volNum = strtod(volText, NULL);
+	idNum = strtod(idText, NULL);
+
+	// Call function to compute the length.
+	lengthNum = ComputeLength(volNum, idNum);
+
+	// Convert result to char* arr.
+	//sprintf_s(lengthText, "%f", lengthNum);
+
+	lengthString = ToString(lengthNum); // Get the string.
+	strcpy_s(lengthText, lengthString.c_str());   // Convert to C-string
+
+	SetWindowText(hLength, lengthText);	// Display the result.
+
+
+	// Conditional statements for message box text.
+	if (lengthNum >= 5 && lengthNum <= 69)
+	{
+		bMsgRed = 0;
+		SetWindowText(hMsgBox, msgStandard);
+
+	}
+
+	else if (lengthNum > 69)
+	{
+		bMsgRed = 1;
+		SetWindowText(hMsgBox, msgLarge);
+
+	}
+
+	else if (lengthNum < 5)
+	{
+		bMsgRed = 1;
+		SetWindowText(hMsgBox, msgTooSmall);
+
+	}
+
+	return 0;
+}
+
+void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
+{
+	const char* emptyText = "";
+
+	SetWindowText(hVol, emptyText);
+	SetWindowText(hID, emptyText);
+	SetWindowText(hLength, emptyText);
+	SetWindowText(hMsgBox, emptyText);
+}
+
+
+double ComputeLength(double vol, double id)
+{
+	double result;
+
+	result = (vol * CONVERSION_FACTOR) / (PI * ((id / 2) * (id / 2)));
+
+	return result;
+
+}
+
+std::string ToString(double num)
+{
+	std::stringstream ss;    // Declare a string stream var.
+
+	// Set the decimal point.
+	ss.setf(std::ios::fixed);
+	ss.setf(std::ios::showpoint);
+	ss.precision(3);
+
+	ss << num;
+
+	return ss.str();
 }
 
 // Register the window class.
@@ -129,6 +309,11 @@ Window::~Window()
 	DestroyWindow(hWnd);
 }
 
+HWND Window::GetWinHandle() noexcept
+{
+	return HWND();
+}
+
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	// Use create parameter passed in from CreateWindow() to store window class pointer at WinAPI side.
@@ -183,11 +368,11 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			break;
 
 		case CLEAR_BUTTON:
-			CalcFunctions::ClearAllText(widg);
+			ClearAllText(hVol, hID, hLength, hMsgBox);
 			break;
 
 		case CALCULATE_BUTTON:
-			CalcFunctions::CalcLength(widg);
+			CalcLength(hVol, hID, hLength, hMsgBox, bMsgRed);
 			break;
 
 		default:
@@ -197,11 +382,11 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	break;
 
 	case WM_CREATE:
-		widg.Interface(hWnd, WindowClass::GetInstance());
+		Interface(hWnd, WindowClass::GetInstance());
 		break;
 
 	case WM_SETFOCUS:
-		SetFocus(Window::widg.hVol);
+		SetFocus(hVol);
 		break;
 
 	case WM_KEYDOWN:
@@ -218,7 +403,7 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	case WM_CTLCOLORSTATIC:
 	{
 
-		if (widg.bMsgRed && (HWND)lParam == GetDlgItem(hWnd, ID_MSGBOX))
+		if (bMsgRed && (HWND)lParam == GetDlgItem(hWnd, ID_MSGBOX))
 		{
 			SetBkColor((HDC)wParam, GetSysColor(COLOR_MENU));
 			SetTextColor((HDC)wParam, RGB(230, 0, 0));
