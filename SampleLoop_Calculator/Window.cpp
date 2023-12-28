@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Widget.h"
 #include <sstream>
+#include <tchar.h>
 
 // Define global variables for linker to see them.
 HWND hVol, hID, hClrBtn, hCalcBtn, hLength, hMsgBox, hTubeComboBox;
@@ -66,7 +67,7 @@ void Interface(HWND hWnd, HINSTANCE hInst)
 	Widget::RLabel(20, 350, 120, 60, "The length of your sample loop is: ", hWnd);
 	hLength = Widget::ResultBox(150, 355, 80, 25, hWnd);
 	Widget::LLabel(240, 365, 50, 25, "inches.", hWnd);
-	hMsgBox = Widget::MsgBox(30, 415, 255, 40, hWnd);
+	hMsgBox = Widget::MsgBox(30, 415, 255, 40, hWnd, (HMENU)ID_MSGBOX);
 
 }
 
@@ -78,7 +79,7 @@ int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox, BOOL bMsgRed)
 	std::string lengthString;
 
 
-	const char* msgStandard = " A standard size.";
+	TCHAR msgStandard[100] = { _T(" A standard size.") };
 	const char* msgLarge = " A very large sample loop. Make sure\n there is enough space.";
 	const char* msgTooSmall = " The sample loop is too small.";
 
@@ -149,8 +150,8 @@ int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox, BOOL bMsgRed)
 	}
 
 	// Convert  to double.
-	volNum = strtod(volText, NULL);
-	idNum = strtod(idText, NULL);
+	volNum = strtod(volText, nullptr);
+	idNum = strtod(idText, nullptr);
 
 	// Call function to compute the length.
 	lengthNum = ComputeLength(volNum, idNum);
@@ -236,7 +237,7 @@ Window::WindowClass::WindowClass() noexcept
 {
 	WNDCLASSEX wc = { 0 };
 	wc.cbSize = sizeof(wc);
-	wc.style = CS_OWNDC;
+	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = HandleMsgSetup;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
@@ -383,15 +384,15 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		// Parse the menu selections:
 		switch (wmId)
 		{
-		case IDD_DIALOG1:
+		case ID_HELP_ABOUT:
 			DialogBox(WindowClass::GetInstance(), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, About);
 			break;
 
-		case IDD_DIALOG2:
+		case ID_HELP_INFO:
 			DialogBox(WindowClass::GetInstance(), MAKEINTRESOURCE(IDD_DIALOG2), hWnd, Info);
 			break;
 
-		case IDM_EXIT:
+		case ID_FILE_EXIT:
 			if (MessageBox(hWnd, " Are you sure you want to quit?", "Quit?", MB_OKCANCEL | MB_ICONEXCLAMATION) == IDOK)
 			{
 				DestroyWindow(hWnd);

@@ -84,14 +84,14 @@ HWND Widget::ResultBox(int posx, int posy, int width, int height, HWND hWnd)
 	return hWnd;
 }
 
-HWND Widget::MsgBox(int posx, int posy, int width, int height, HWND hWnd)
+HWND Widget::MsgBox(int posx, int posy, int width, int height, HWND hWnd, HMENU option)
 {
-	CreateWindowEx(
+	hWnd = CreateWindowEx(
 		WS_EX_CLIENTEDGE, "static", "",
 		WS_VISIBLE | WS_CHILD,
-		posx, posy, width, height, hWnd, (HMENU)ID_MSGBOX, nullptr, nullptr);
+		posx, posy, width, height, hWnd, option, nullptr, nullptr);
 
-	return HWND();
+	return hWnd;
 }
 
 
