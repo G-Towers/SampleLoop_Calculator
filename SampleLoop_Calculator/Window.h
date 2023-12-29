@@ -17,7 +17,7 @@ INT_PTR CALLBACK    Info(HWND, UINT, WPARAM, LPARAM);
 
 // Helper functions.
 void Interface(HWND hWnd, HINSTANCE hInst);
-int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox, BOOL bMsgRed);
+int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
 void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
 double ComputeLength(double vol, double id);
 std::string ToString(double);

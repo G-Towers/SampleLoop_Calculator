@@ -71,7 +71,7 @@ void Interface(HWND hWnd, HINSTANCE hInst)
 
 }
 
-int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox, BOOL bMsgRed)
+int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 {
 	int val;
 	double volNum, idNum, lengthNum;
@@ -404,7 +404,7 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			break;
 
 		case CALCULATE_BUTTON:
-			CalcLength(hVol, hID, hLength, hMsgBox, bMsgRed);
+			CalcLength(hVol, hID, hLength, hMsgBox);
 			break;
 
 		default:
