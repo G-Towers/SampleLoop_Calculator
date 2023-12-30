@@ -16,7 +16,7 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Info(HWND, UINT, WPARAM, LPARAM);
 
 // Helper functions.
-void Interface(HWND hWnd, HINSTANCE hInst);
+
 int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
 void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
 double ComputeLength(double vol, double id);
@@ -61,6 +61,8 @@ public:
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 	static HWND GetWinHandle() noexcept;
+
+	void Interface(HWND hWnd, HINSTANCE hInst);
 
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;

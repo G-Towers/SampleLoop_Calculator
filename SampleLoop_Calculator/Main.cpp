@@ -1,13 +1,8 @@
 // Sample loop calculator.
 
 #include "Window.h"
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <tchar.h>
-#include <iostream>
-#include <sstream>
-
+#include "framework.h"
+#
 
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,

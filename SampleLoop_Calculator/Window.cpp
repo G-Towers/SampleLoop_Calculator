@@ -51,26 +51,6 @@ INT_PTR CALLBACK Info(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	return (INT_PTR)FALSE;
 }
 
-void Interface(HWND hWnd, HINSTANCE hInst)
-{
-	// Call Widget functions to draw the interface. 
-	Widget::GroupBox(15, 10, 285, 220, "Volume and ID Information", hWnd, hInst);
-	Widget::RLabel(45, 50, 120, 30, "Enter Volume in Cubic Centemeters: ", hWnd);
-	hVol = Widget::InputBox(180, 55, 100, 25, hWnd);
-	Widget::LLabel(25, 100, 220, 30, "Select Tubing: ", hWnd);
-	hTubeComboBox = Widget::ComboBox(25, 120, 265, 150, "", hWnd, hInst);
-	Widget::RLabel(20, 170, 150, 30, "Enter inside diameter of tube in inches: ", hWnd);
-	hID = Widget::InputBox(180, 175, 100, 25, hWnd);
-	hClrBtn = Widget::Button(15, 255, 100, 30, "Clear", hWnd, (HMENU)CLEAR_BUTTON);
-	hCalcBtn = Widget::Button(200, 255, 100, 30, "Calculate", hWnd, (HMENU)CALCULATE_BUTTON);
-	Widget::GroupBox(15, 305, 285, 175, "Sample Loop Results", hWnd, hInst);
-	Widget::RLabel(20, 350, 120, 60, "The length of your sample loop is: ", hWnd);
-	hLength = Widget::ResultBox(150, 355, 80, 25, hWnd);
-	Widget::LLabel(240, 365, 50, 25, "inches.", hWnd);
-	hMsgBox = Widget::MsgBox(30, 415, 255, 40, hWnd, (HMENU)ID_MSGBOX);
-
-}
-
 int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 {
 	int val;
@@ -315,6 +295,27 @@ HWND Window::GetWinHandle() noexcept
 	return HWND();
 }
 
+void Window::Interface(HWND hWnd, HINSTANCE hInst)
+{
+
+	// Call Widget functions to draw the interface. 
+	Widget::GroupBox(15, 10, 285, 220, "Volume and ID Information", hWnd, hInst);
+	Widget::RLabel(45, 50, 120, 30, "Enter Volume in Cubic Centemeters: ", hWnd);
+	hVol = Widget::InputBox(180, 55, 100, 25, hWnd);
+	Widget::LLabel(25, 100, 220, 30, "Select Tubing: ", hWnd);
+	hTubeComboBox = Widget::ComboBox(25, 120, 265, 150, "", hWnd, hInst);
+	Widget::RLabel(20, 170, 150, 30, "Enter inside diameter of tube in inches: ", hWnd);
+	hID = Widget::InputBox(180, 175, 100, 25, hWnd);
+	hClrBtn = Widget::Button(15, 255, 100, 30, "Clear", hWnd, (HMENU)CLEAR_BUTTON);
+	hCalcBtn = Widget::Button(200, 255, 100, 30, "Calculate", hWnd, (HMENU)CALCULATE_BUTTON);
+	Widget::GroupBox(15, 305, 285, 175, "Sample Loop Results", hWnd, hInst);
+	Widget::RLabel(20, 350, 120, 60, "The length of your sample loop is: ", hWnd);
+	hLength = Widget::ResultBox(150, 355, 80, 25, hWnd);
+	Widget::LLabel(240, 365, 50, 25, "inches.", hWnd);
+	hMsgBox = Widget::MsgBox(30, 415, 255, 40, hWnd, (HMENU)ID_MSGBOX);
+
+}
+
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	// Use create parameter passed in from CreateWindow() to store window class pointer at WinAPI side.
@@ -370,11 +371,11 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 				(WPARAM)ItemIndex, (LPARAM)ListItem);
 			//MessageBox(hWnd, (LPCWSTR)ListItem, _T("Item Selected"), MB_OK);
 			if (ItemIndex == (WPARAM)0)
-				SetWindowTextA(hID, eighthTube);
+				SetWindowText(hID, eighthTube);
 			else if (ItemIndex == (WPARAM)1)
-				SetWindowTextA(hID, sixteenthTube);
+				SetWindowText(hID, sixteenthTube);
 			else
-				SetWindowTextA(hID, empty);
+				SetWindowText(hID, empty);
 
 		}
 

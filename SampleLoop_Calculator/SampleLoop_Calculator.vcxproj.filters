@@ -41,6 +41,12 @@
     <ClInclude Include="Widget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SampleLoop_Calculator.rc">
