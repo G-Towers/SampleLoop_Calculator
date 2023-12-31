@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Window.h"
-#include "framework.h"
 
 // Helper functions.
 int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);

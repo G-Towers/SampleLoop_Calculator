@@ -1,8 +1,7 @@
 // Window.cpp
 
 #include "Window.h"
-#include "Widget.h"
-#include "HelperFunctions.h"
+
 
 // Define global variables for linker to see them.
 HWND hGrpBxVolIn, hRlblVolCC, hInBxVol, hLlblSelTb, hComboBoxSelTb, hRlblEntID, hInBxEntID,

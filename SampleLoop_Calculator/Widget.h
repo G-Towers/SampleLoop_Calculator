@@ -6,7 +6,6 @@
 
 namespace Widget
 {
-
 	HWND RLabel(int posx, int posy, int width, int height, const char* text, HWND hWnd);
 	HWND LLabel(int posx, int posy, int width, int height, const char* text, HWND hWnd);
 	HWND GroupBox(int posx, int posy, int width, int height, const char* text, HWND hWnd, HINSTANCE hInst);
@@ -16,9 +15,5 @@ namespace Widget
 	HWND ResultBox(int posx, int posy, int width, int height, HWND hWnd);
 	HWND MsgBox(int posx, int posy, int width, int height, HWND hWnd, HMENU option);
 
-	
-
-
-	
 };
 

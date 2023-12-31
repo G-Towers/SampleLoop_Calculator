@@ -60,6 +60,7 @@ public:
 	static HWND GetWinHandle() noexcept;
 
 	void Interface(const HWND& hWnd, const HINSTANCE& hInst);
+	// The interface, lables, textboxes and buttons.
 
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -74,7 +75,6 @@ private:
 private:
 	int width;
 	int height;
-	//static Window wnd;
 	HWND hWnd;	// The handle to the window.
 
 };
