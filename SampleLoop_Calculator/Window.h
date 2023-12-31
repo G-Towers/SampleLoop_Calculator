@@ -2,25 +2,22 @@
 
 #pragma once
 
-#include <Windows.h>
+#include "framework.h"
 #include "GTException.h"
 #include "resource.h"
+#include "Widget.h"
+#include "HelperFunctions.h"
 
 // Global variables.
-extern HWND hVol, hID, hClrBtn, hCalcBtn, hLength, hMsgBox, hTubeComboBox;	
+extern HWND hGrpBxVolIn, hRlblVolCC, hInBxVol, hLlblSelTb, hComboBoxSelTb, hRlblEntID, hInBxEntID,
+		hBtnClr, hBtnCalc, hGrpBxSmplRes, hLlblSmplLen, hResBxSmplLen, hLlblInch, hMsgBxMsg;
 extern BOOL bMsgRed;
 
 
 // Dialog Box Procs
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    Info(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK Info(HWND, UINT, WPARAM, LPARAM);
 
-// Helper functions.
-
-int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
-void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
-double ComputeLength(double vol, double id);
-std::string ToString(double);
 
 // Encapsulates the creation and destruction of the window and handles messages.
 class Window
@@ -62,7 +59,7 @@ public:
 	Window& operator=(const Window&) = delete;
 	static HWND GetWinHandle() noexcept;
 
-	void Interface(HWND hWnd, HINSTANCE hInst);
+	void Interface(const HWND& hWnd, const HINSTANCE& hInst);
 
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;

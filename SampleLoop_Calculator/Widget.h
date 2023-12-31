@@ -1,4 +1,4 @@
-// Interface.h
+// Widget.h
 
 #pragma once
 #include "Window.h"

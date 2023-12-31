@@ -44,12 +44,12 @@ int CALLBACK WinMain(
 			strcpy_s(A, sizeof(A) / sizeof(char), (char*)Valve[k]);
 
 			// Add string to combobox.
-			SendMessage(hTubeComboBox, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)A);
+			SendMessage(hComboBoxSelTb, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)A);
 		}
 
 		// Send the CB_SETCURSEL message to display an initial item 
 		// in the selection field.
-		SendMessage(hTubeComboBox, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
+		SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
 
         while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
         {
