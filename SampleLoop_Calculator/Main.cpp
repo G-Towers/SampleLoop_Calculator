@@ -1,4 +1,7 @@
 // Sample loop calculator.
+// Calculates the length of a sample loop in inches from input of
+// volume in ml. or cc. and type of tubing used.
+// Made for use in FID type gas analyzers.
 
 #include "Window.h"
 
@@ -15,17 +18,15 @@ int CALLBACK WinMain(
         // Instantiate the window.
         Window mainWnd(315, 515, "Sample Loop Calculator");
 
-        // The message loop.
+        // Message loop identifiers.
         MSG msg;
         BOOL gResult;
 
 		// Register Hot Keys.
 		RegisterHotKey(NULL, ESC_HOTKEY, MOD_NOREPEAT, VK_ESCAPE);
 
-		// Load the combobox with item list.  
-		// Send a CB_ADDSTRING message to load each item.
-
-		const char Valve[3][50] =
+		// Item list for combobox.
+		const char tubeList[3][50] =
 		{
 			"1/8 OD Teflon Tubing",
 			"1/16 OD Stainless Steal Tubing",
@@ -33,23 +34,25 @@ int CALLBACK WinMain(
 
 		};
 
-		char A[60];		// Buffer for Tube ComboBox.
-		int  k = 0;		// To traverse the array.
+		char tubeBuff[80];		// Buffer for comboBox list.
 
-		memset(&A, 0, sizeof(A));   // Allocate memory for the Tubing buffer and set to 0.
+		memset(&tubeBuff, 0, sizeof(tubeBuff));   // Allocate memory for the tube buffer and set to 0.
 
-		for (k = 0; k <= 2; k += 1)
+		for (int k = 0; k <= 2; k++)	// Traverse the array.
 		{
-			strcpy_s(A, sizeof(A) / sizeof(char), (char*)Valve[k]);
+			strcpy_s(tubeBuff, sizeof(tubeBuff) / sizeof(char), (char*)tubeList[k]);
 
 			// Add string to combobox.
-			SendMessage(hComboBoxSelTb, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)A);
+			// Load the combobox with item list.  
+			// Send a CB_ADDSTRING message to load each item.
+			SendMessage(hComboBoxSelTb, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)tubeBuff);
 		}
 
 		// Send the CB_SETCURSEL message to display an initial item 
 		// in the selection field.
 		SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
 
+		// The message loop.
         while ((gResult = GetMessage(&msg, NULL, 0, 0)) > 0)
         {
 			// Hot Keys.
