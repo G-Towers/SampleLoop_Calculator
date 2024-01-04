@@ -13,7 +13,7 @@ int CALLBACK WinMain(
     try
     {
         // Instantiate the window.
-        Window wnd(315, 515, "Sample Loop Calculator");
+        Window mainWnd(315, 515, "Sample Loop Calculator");
 
         // The message loop.
         MSG msg;
@@ -50,7 +50,7 @@ int CALLBACK WinMain(
 		// in the selection field.
 		SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
 
-        while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
+        while ((gResult = GetMessage(&msg, NULL, 0, 0)) > 0)
         {
 			// Hot Keys.
 			if (msg.wParam == ESC_HOTKEY)
@@ -59,7 +59,7 @@ int CALLBACK WinMain(
 				//MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
 			}
 
-			if (!IsDialogMessage(wnd.GetWinHandle(), &msg))
+			if (!IsDialogMessage(mainWnd.GetWinHandle(), &msg))
 			{
 				TranslateMessage(&msg); // Translate virtual-key messages into character messages.
 				DispatchMessage(&msg);  // Send message to windows procedure.

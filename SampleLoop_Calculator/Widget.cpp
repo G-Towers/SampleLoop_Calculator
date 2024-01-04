@@ -10,7 +10,7 @@ HWND Widget::RLabel(int posx, int posy, int width, int height, const char* text,
 		posx, posy, width, height, hWnd, nullptr, nullptr, nullptr);
 	HFONT hfVol = CreateFont(/*size=*/-14, 0, 0, 0, FW_NORMAL, 0, 0, 0,
 		ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "MS Sans Serif");
-	SendMessage(hWnd, WM_SETFONT, (WPARAM)hfVol, 0);
+	SendMessage(Rlbl_hWnd, WM_SETFONT, (WPARAM)hfVol, 0);
 
 	return Rlbl_hWnd;
 }
@@ -22,7 +22,7 @@ HWND Widget::LLabel(int posx, int posy, int width, int height, const char* text,
 		posx, posy, width, height, hWnd, nullptr, nullptr, nullptr);
 	HFONT hfVol = CreateFont(/*size=*/-14, 0, 0, 0, FW_NORMAL, 0, 0, 0,
 		ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "MS Sans Serif");
-	SendMessage(hWnd, WM_SETFONT, (WPARAM)hfVol, 0);
+	SendMessage(Llbl_hWnd, WM_SETFONT, (WPARAM)hfVol, 0);
 
 	return Llbl_hWnd;
 }

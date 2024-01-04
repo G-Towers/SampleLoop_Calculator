@@ -53,14 +53,18 @@ private:
 		HINSTANCE hInst;	// Stores the handle to the instance.
 	};
 public:
+
 	Window(int width, int height, const char* name); // Constructs the window.
 	~Window();	// Destroys the window.
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
-	static HWND GetWinHandle() noexcept;
+
+	HWND GetWinHandle() const;
 
 	void Interface(const HWND& hWnd, const HINSTANCE& hInst);
 	// The interface, lables, textboxes and buttons.
+
+	int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
 
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
