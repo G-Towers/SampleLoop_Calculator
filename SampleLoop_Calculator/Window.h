@@ -65,6 +65,8 @@ public:
 	// The interface, lables, textboxes and buttons.
 
 	int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
+	// Handles input validation and converts strings and char* arrays to doubles and back.
+	// Also assigns BOOL values for message color.
 
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;

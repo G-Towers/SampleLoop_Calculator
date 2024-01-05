@@ -181,14 +181,14 @@ int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 	// Validate user input.
 	if (strcmp(volText, "") == 0 || strcmp(idText, "") == 0)
 	{
-		val = MessageBoxEx(Window::GetWinHandle(), "You are missing input!\nPlease enter both volume and inside diameter.",
+		val = MessageBoxEx(hWnd, "You are missing input!\nPlease enter both volume and inside diameter.",
 			NULL, MB_OKCANCEL | MB_ICONERROR, NULL);
 
 		switch (val)
 		{
 		case IDCANCEL:
-			DestroyWindow(Window::GetWinHandle());
-			break;
+			PostQuitMessage(0);
+			return 0;
 
 		case IDOK:
 			return 0;
@@ -208,8 +208,8 @@ int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 			switch (val)
 			{
 			case IDCANCEL:
-				DestroyWindow(Window::GetWinHandle());
-				break;
+				PostQuitMessage(0);
+				return 0;
 
 			case IDOK:
 				return 0;
@@ -223,15 +223,15 @@ int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 	{
 		if (!isdigit(idText[i]) && idText[i] != '.')
 		{
-			val = MessageBoxEx(Window::GetWinHandle(), "ID is not a valid number!\nPlease enter a valid number for inside diameter."
+			val = MessageBoxEx(hWnd, "ID is not a valid number!\nPlease enter a valid number for inside diameter."
 				"\nSee -- Help \\ Info -- for more information.",
 				NULL, MB_OKCANCEL | MB_ICONERROR, NULL);
 
 			switch (val)
 			{
 			case IDCANCEL:
-				DestroyWindow(Window::GetWinHandle());
-				break;
+				PostQuitMessage(0);
+				return 0;
 
 			case IDOK:
 				return 0;
