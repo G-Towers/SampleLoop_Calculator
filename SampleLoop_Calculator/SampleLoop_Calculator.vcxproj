@@ -152,8 +152,12 @@
     <ResourceCompile Include="SampleLoop_Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="SampleLoopInfo.bmp" />
+    <Image Include="SampLoopCalcIcon.bmp" />
     <Image Include="SLC_Large.ico" />
+    <Image Include="SLC_Logo.bmp" />
     <Image Include="SLC_Small.ico" />
+    <Image Include="SmpLoopGrad.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

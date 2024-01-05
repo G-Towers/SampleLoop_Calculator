@@ -66,5 +66,17 @@
     <Image Include="SLC_Large.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="SmpLoopGrad.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SampleLoopInfo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SampLoopCalcIcon.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SLC_Logo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
