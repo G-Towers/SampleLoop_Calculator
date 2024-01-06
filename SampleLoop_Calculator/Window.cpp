@@ -154,7 +154,7 @@ void Window::Interface(const HWND& hWnd, const HINSTANCE& hInst)
 	hRlblEntID = Widget::RLabel(20, 170, 150, 30, "Enter inside diameter of tube in inches: ", hWnd);
 	hInBxEntID = Widget::InputBox(180, 175, 100, 25, hWnd);
 	hBtnClr = Widget::Button(15, 255, 100, 30, "Clear", hWnd, (HMENU)CLEAR_BUTTON);
-	hBtnCalc = Widget::Button(200, 255, 100, 30, "Calculate", hWnd, (HMENU)CALCULATE_BUTTON);
+	hBtnCalc = Widget::ButtonDef(200, 255, 100, 30, "Calculate", hWnd, (HMENU)CALCULATE_BUTTON);
 	hGrpBxSmplRes = Widget::GroupBox(15, 305, 285, 175, "Sample Loop Results", hWnd, hInst);
 	hLlblSmplLen = Widget::RLabel(20, 350, 120, 60, "The length of your sample loop is: ", hWnd);
 	hResBxSmplLen = Widget::ResultBox(150, 355, 80, 25, hWnd);
@@ -192,7 +192,6 @@ int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 
 		case IDOK:
 			return 0;
-			break;
 
 		}
 	}
@@ -213,7 +212,6 @@ int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 
 			case IDOK:
 				return 0;
-				break;
 
 			}
 		}
@@ -235,7 +233,6 @@ int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 
 			case IDOK:
 				return 0;
-				break;
 
 			}
 		}
@@ -362,9 +359,9 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		case ID_FILE_EXIT:
 			if (MessageBox(hWnd, " Are you sure you want to quit?", "Quit?", MB_OKCANCEL | MB_ICONEXCLAMATION) == IDOK)
 			{
-				DestroyWindow(hWnd);
+				PostQuitMessage(0);
 			}
-			break;
+			return 0;
 
 		case CLEAR_BUTTON:
 			ClearAllText(hInBxVol, hInBxEntID, hResBxSmplLen, hMsgBxMsg);
