@@ -22,6 +22,9 @@ int CALLBACK WinMain(
         MSG msg;
         BOOL gResult;
 
+		// Load the accelerator table.
+		HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDR_ACCELERATOR1));
+
 		// Register Hot Keys.
 		RegisterHotKey(NULL, ESC_HOTKEY, MOD_NOREPEAT, VK_ESCAPE);
 
@@ -62,10 +65,28 @@ int CALLBACK WinMain(
 				//MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
 			}
 
-			if (!IsDialogMessage(mainWnd.GetWinHandle(), &msg))
+			//// To use keyboard accelerator table.
+			//if (!TranslateAccelerator(mainWnd.GetWinHandle(), hAccelTable, &msg))
+			//{
+			//	TranslateMessage(&msg);
+			//	DispatchMessage(&msg);
+			//}
+
+			//// To use tabstops.
+			//if (!IsDialogMessage(mainWnd.GetWinHandle(), &msg))
+			//{
+			//	TranslateMessage(&msg); // Translate virtual-key messages into character messages.
+			//	DispatchMessage(&msg);  // Send message to windows procedure.
+			//}
+
+			// To use them both - (Causes "0.0625" in ID box).
+			if (!TranslateAccelerator(mainWnd.GetWinHandle(), hAccelTable, &msg))
 			{
-				TranslateMessage(&msg); // Translate virtual-key messages into character messages.
-				DispatchMessage(&msg);  // Send message to windows procedure.
+				if (!IsDialogMessage(mainWnd.GetWinHandle(), &msg))
+				{
+					TranslateMessage(&msg); // Translate virtual-key messages into character messages.
+					DispatchMessage(&msg);  // Send message to windows procedure.
+				}
 			}
             
         }

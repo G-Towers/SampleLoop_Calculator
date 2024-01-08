@@ -12,6 +12,7 @@
 #define IDB_BITMAP2                     109
 #define IDB_BITMAP3                     110
 #define IDB_BITMAP4                     111
+#define IDR_ACCELERATOR1                112
 #define CALCULATE_BUTTON                144
 #define CLEAR_BUTTON                    145
 #define ID_MSGBOX                       146
@@ -19,13 +20,14 @@
 #define ID_FILE_EXIT                    40001
 #define ID_HELP_ABOUT                   40002
 #define ID_HELP_INFO                    40003
+#define ID_FILE_EXIT40011               40011
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        112
-#define _APS_NEXT_COMMAND_VALUE         40004
+#define _APS_NEXT_RESOURCE_VALUE        113
+#define _APS_NEXT_COMMAND_VALUE         40013
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

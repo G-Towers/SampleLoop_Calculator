@@ -68,7 +68,7 @@ HWND Widget::Button(int posx, int posy, int width, int height, const char* text,
 	HWND Btn_hWnd = CreateWindow(
 		"BUTTON",
 		text,
-		WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+		WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
 		posx, posy, width, height, hWnd, option, nullptr, nullptr);
 
 	return Btn_hWnd;
@@ -79,7 +79,7 @@ HWND Widget::ButtonDef(int posx, int posy, int width, int height, const char* te
 	HWND BtnDef_hWnd = CreateWindow(
 		"BUTTON",
 		text,
-		WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON | BS_DEFPUSHBUTTON,
+		WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON | BS_DEFPUSHBUTTON,
 		posx, posy, width, height, hWnd, option, nullptr, nullptr);
 
 	return BtnDef_hWnd;
