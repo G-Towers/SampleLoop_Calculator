@@ -44,7 +44,7 @@ HWND Widget::InputBox(int posx, int posy, int width, int height, HWND hWnd)
 	HWND InptBx_hWnd = CreateWindowEx(
 		WS_EX_CLIENTEDGE, "Edit", "",
 		WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		posx, posy, width, height, hWnd, NULL, NULL, NULL);
+		posx, posy, width, height, hWnd, nullptr, nullptr, nullptr);
 
 	return InptBx_hWnd;
 }
@@ -54,7 +54,7 @@ HWND Widget::ComboBox(int posx, int posy, int width, int height, const char* tex
 	HWND CmbBx_hWnd = CreateWindow(
 		"COMBOBOX",
 		text,
-		CBS_DROPDOWN | CBS_HASSTRINGS | WS_CHILD | WS_VISIBLE,
+		CBS_DROPDOWN | CBS_HASSTRINGS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
 		posx, posy, width, height, hWnd, nullptr, hInst, nullptr);
 	//HFONT hfTube = CreateFont(/*size=*/-14, 0, 0, 0, FW_NORMAL, 0, 0, 0,
 	//    ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, _T("MS Sans Serif"));

@@ -171,9 +171,9 @@ void Window::ComboBoxList()
 	// Item list for combobox.
 	const char tubeList[3][50] =
 	{
+		"User Defined",
 		"1/8 OD Teflon Tubing",
-		"1/16 OD Stainless Steal Tubing",
-		"User Defined"
+		"1/16 OD Stainless Steal Tubing"
 
 	};
 
@@ -193,7 +193,7 @@ void Window::ComboBoxList()
 
 	// Send the CB_SETCURSEL message to display an initial item 
 	// in the selection field.
-	SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
+	SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
 
 int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
@@ -367,13 +367,13 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			(TCHAR)SendMessage((HWND)lParam, (UINT)CB_GETLBTEXT,
 				(WPARAM)ItemIndex, (LPARAM)ListItem);
 			//MessageBox(hWnd, (LPCWSTR)ListItem, _T("Item Selected"), MB_OK);
-			if (ItemIndex == (WPARAM)0)
+			if (ItemIndex == (WPARAM)1)
 			{
 				//OutputDebugString(mm(msg, wParam, lParam).c_str());
 				SetWindowText(hInBxEntID, eighthTube);
 			}
 				
-			else if (ItemIndex == (WPARAM)1)
+			else if (ItemIndex == (WPARAM)2)
 				SetWindowText(hInBxEntID, sixteenthTube);
 			else
 				SetWindowText(hInBxEntID, empty);
