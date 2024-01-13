@@ -150,7 +150,10 @@ void Window::Interface(const HWND& hWnd, const HINSTANCE& hInst)
 	hRlblVolCC = Widget::RLabel(45, 50, 120, 30, "Enter Volume in Cubic Centemeters: ", hWnd);
 	hInBxVol = Widget::InputBox(180, 55, 100, 25, hWnd);
 	hLlblSelTb = Widget::LLabel(25, 100, 220, 30, "Select Tubing: ", hWnd);
-	hComboBoxSelTb = Widget::ComboBox(25, 120, 265, 150, "", hWnd, hInst);
+
+	hComboBoxSelTb = Widget::ComboBox(25, 120, 265, 150, "", hWnd, hInst);	// The combobox window.
+	ComboBoxList();	// Items in the combobox.
+
 	hRlblEntID = Widget::RLabel(20, 170, 150, 30, "Enter inside diameter of tube in inches: ", hWnd);
 	hInBxEntID = Widget::InputBox(180, 175, 100, 25, hWnd);
 	hBtnClr = Widget::Button(15, 255, 100, 30, "Clear", hWnd, (HMENU)CLEAR_BUTTON);
@@ -161,6 +164,36 @@ void Window::Interface(const HWND& hWnd, const HINSTANCE& hInst)
 	hLlblInch = Widget::LLabel(240, 365, 50, 25, "inches.", hWnd);
 	hMsgBxMsg = Widget::MsgBox(30, 415, 255, 40, hWnd, (HMENU)ID_MSGBOX);
 
+}
+
+void Window::ComboBoxList()
+{
+	// Item list for combobox.
+	const char tubeList[3][50] =
+	{
+		"1/8 OD Teflon Tubing",
+		"1/16 OD Stainless Steal Tubing",
+		"User Defined"
+
+	};
+
+	char tubeBuff[80];		// Buffer for comboBox list.
+
+	memset(&tubeBuff, 0, sizeof(tubeBuff));   // Allocate memory for the tube buffer and set to 0.
+
+	for (int k = 0; k <= 2; k++)	// Traverse the array.
+	{
+		strcpy_s(tubeBuff, sizeof(tubeBuff) / sizeof(char), (char*)tubeList[k]);
+
+		// Add string to combobox.
+		// Load the combobox with item list.  
+		// Send a CB_ADDSTRING message to load each item.
+		SendMessage(hComboBoxSelTb, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)tubeBuff);
+	}
+
+	// Send the CB_SETCURSEL message to display an initial item 
+	// in the selection field.
+	SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
 }
 
 int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)

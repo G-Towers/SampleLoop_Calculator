@@ -64,6 +64,10 @@ public:
 	void Interface(const HWND& hWnd, const HINSTANCE& hInst);
 	// The interface, lables, textboxes and buttons.
 
+	void ComboBoxList();
+	// Memory allocation and buffer for the combobox list.
+	// Copies from the allocated buffer to a 2d array of chars.
+
 	int CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox);
 	// Handles input validation and converts strings and char* arrays to doubles and back.
 	// Also assigns BOOL values for message color.
