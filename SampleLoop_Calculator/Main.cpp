@@ -35,7 +35,7 @@ int CALLBACK WinMain(
 			if (msg.wParam == ESC_HOTKEY)
 			{
 				return 0;
-				//MessageBox(NULL, TEXT("Escape Key Down"), TEXT("Key Down"), MB_OK);
+				//MessageBox(NULL, TEXT("Escape Key Down"), TEXT("ESC Key Down"), MB_OK);
 			}
 
 			//// To use keyboard accelerator table.
@@ -52,7 +52,6 @@ int CALLBACK WinMain(
 			//	DispatchMessage(&msg);  // Send message to windows procedure.
 			//}
 
-			// To use them both - (Causes "0.0625" in ID box).
 			if (!TranslateAccelerator(mainWnd.GetWinHandle(), hAccelTable, &msg))
 			{
 				if (!IsDialogMessage(mainWnd.GetWinHandle(), &msg))
