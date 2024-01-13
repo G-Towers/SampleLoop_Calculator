@@ -341,6 +341,9 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
+	static WinMsgMap mm;
+	//OutputDebugString(mm(msg, wParam, lParam).c_str());
+
 	LRESULT result = 0;
 	bool wasHandled = false;
 	int wmId = LOWORD(wParam);
@@ -367,7 +370,11 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 				(WPARAM)ItemIndex, (LPARAM)ListItem);
 			//MessageBox(hWnd, (LPCWSTR)ListItem, _T("Item Selected"), MB_OK);
 			if (ItemIndex == (WPARAM)0)
+			{
+				OutputDebugString(mm(msg, wParam, lParam).c_str());
 				SetWindowText(hInBxEntID, eighthTube);
+			}
+				
 			else if (ItemIndex == (WPARAM)1)
 				SetWindowText(hInBxEntID, sixteenthTube);
 			else

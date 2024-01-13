@@ -7,6 +7,7 @@
 #include "resource.h"
 #include "Widget.h"
 #include "HelperFunctions.h"
+#include "WinMsgMap.h"
 
 // Global variables.
 extern HWND hGrpBxVolIn, hRlblVolCC, hInBxVol, hLlblSelTb, hComboBoxSelTb, hRlblEntID, hInBxEntID,

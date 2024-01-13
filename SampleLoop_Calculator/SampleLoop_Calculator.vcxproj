@@ -138,6 +138,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Widget.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WinMsgMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Widget.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WinMsgMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SampleLoop_Calculator.rc" />
