@@ -10,18 +10,15 @@ void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 	SetWindowText(hID, emptyText);
 	SetWindowText(hLength, emptyText);
 	SetWindowText(hMsgBox, emptyText);
-	SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);	// Set to "User Defined".
+	SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);	// Set to "User Defined".
 }
-
 
 double ComputeLength(double vol, double id)
 {
-	const double conversionFactor = 0.06102374;	// Converts cubic centimeters to cubic inches (1cc in ci).
-	const double pi = 3.141592654;	// Pi.
+	const double conversionFactor = 0.06102374;	// To convert cubic centimeters to cubic inches (1cc in ci).
+	const double pi = 3.141592654;
 
-	double result;
-
-	result = (vol * conversionFactor) / (pi * ((id / 2) * (id / 2)));
+	double result = (vol * conversionFactor) / (pi * ((id / 2) * (id / 2)));
 
 	return result;
 
@@ -36,7 +33,7 @@ std::string ToString(double num)
 	ss.setf(std::ios::showpoint);
 	ss.precision(3);
 
-	ss << num;
+	ss << num;	// Output to stream.
 
-	return ss.str();
+	return ss.str();	// Return as string.
 }

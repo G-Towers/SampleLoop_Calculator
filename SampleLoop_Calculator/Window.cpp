@@ -288,6 +288,7 @@ int Window::CalcLength(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 
 
 	// Conditional statements for message box text.
+	// Changes green text to red.
 	if (lengthNum >= 5 && lengthNum <= 69)
 	{
 		bMsgRed = 0;
@@ -341,6 +342,7 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
+	//// Print wParam and lParam to immediate window.
 	//static WinMsgMap mm;
 	//OutputDebugString(mm(msg, wParam, lParam).c_str());
 

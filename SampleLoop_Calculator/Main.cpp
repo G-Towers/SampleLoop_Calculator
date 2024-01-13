@@ -5,7 +5,6 @@
 
 #include "Window.h"
 
-
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -52,12 +51,13 @@ int CALLBACK WinMain(
 			//	DispatchMessage(&msg);  // Send message to windows procedure.
 			//}
 
+			// To use them both.
 			if (!TranslateAccelerator(mainWnd.GetWinHandle(), hAccelTable, &msg))
 			{
 				if (!IsDialogMessage(mainWnd.GetWinHandle(), &msg))
 				{
-					TranslateMessage(&msg); // Translate virtual-key messages into character messages.
-					DispatchMessage(&msg);  // Send message to windows procedure.
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
 				}
 			}
             

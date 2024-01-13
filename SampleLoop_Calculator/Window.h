@@ -11,14 +11,12 @@
 
 // Global variables.
 extern HWND hGrpBxVolIn, hRlblVolCC, hInBxVol, hLlblSelTb, hComboBoxSelTb, hRlblEntID, hInBxEntID,
-		hBtnClr, hBtnCalc, hGrpBxSmplRes, hLlblSmplLen, hResBxSmplLen, hLlblInch, hMsgBxMsg;
-extern BOOL bMsgRed;
-
+		hBtnClr, hBtnCalc, hGrpBxSmplRes, hLlblSmplLen, hResBxSmplLen, hLlblInch, hMsgBxMsg;	// Handles to interface items.
+extern BOOL bMsgRed;	// To change the color of text to red.
 
 // Dialog Box Procs
 INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK Info(HWND, UINT, WPARAM, LPARAM);
-
 
 // Encapsulates the creation and destruction of the window and handles messages.
 class Window

@@ -6,6 +6,7 @@
 
 namespace Widget
 {
+	// Interface items(boxes, labels, buttons etc...).
 	HWND RLabel(int posx, int posy, int width, int height, const char* text, HWND hWnd);
 	HWND LLabel(int posx, int posy, int width, int height, const char* text, HWND hWnd);
 	HWND GroupBox(int posx, int posy, int width, int height, const char* text, HWND hWnd, HINSTANCE hInst);
