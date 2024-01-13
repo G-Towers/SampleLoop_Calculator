@@ -341,11 +341,9 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
-	static WinMsgMap mm;
+	//static WinMsgMap mm;
 	//OutputDebugString(mm(msg, wParam, lParam).c_str());
 
-	LRESULT result = 0;
-	bool wasHandled = false;
 	int wmId = LOWORD(wParam);
 	char eighthTube[100] = "0.0625";
 	char sixteenthTube[100] = "0.040";
@@ -357,13 +355,13 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	{
 
 		// ComboBox
-		if (HIWORD(wParam) == CBN_SELCHANGE)
+		if (HIWORD(wParam) == CBN_SELCHANGE && LOWORD(wParam) == 0)	// Why does this work???
 			// If the user makes a selection from the list:
 			//   Send CB_GETCURSEL message to get the index of the selected list item.
 			//   Send CB_GETLBTEXT message to get the item.
 			//   Display the item in a messagebox.
 		{
-			int ItemIndex = SendMessage((HWND)lParam, (UINT)CB_GETCURSEL,
+			int ItemIndex = (UINT)SendMessage((HWND)lParam, (UINT)CB_GETCURSEL,
 				(WPARAM)0, (LPARAM)0);
 			TCHAR  ListItem[256];
 			(TCHAR)SendMessage((HWND)lParam, (UINT)CB_GETLBTEXT,
@@ -371,7 +369,7 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			//MessageBox(hWnd, (LPCWSTR)ListItem, _T("Item Selected"), MB_OK);
 			if (ItemIndex == (WPARAM)0)
 			{
-				OutputDebugString(mm(msg, wParam, lParam).c_str());
+				//OutputDebugString(mm(msg, wParam, lParam).c_str());
 				SetWindowText(hInBxEntID, eighthTube);
 			}
 				
@@ -381,9 +379,6 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 				SetWindowText(hInBxEntID, empty);
 
 		}
-
-		wasHandled = true;
-		result = 0;
 
 		// Parse the menu selections:
 		switch (wmId)
