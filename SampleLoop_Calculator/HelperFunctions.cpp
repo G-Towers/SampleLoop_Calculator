@@ -11,6 +11,7 @@ void ClearAllText(HWND hVol, HWND hID, HWND hLength, HWND hMsgBox)
 	SetWindowText(hLength, emptyText);
 	SetWindowText(hMsgBox, emptyText);
 	SendMessage(hComboBoxSelTb, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);	// Set to "User Defined".
+	SetFocus(hInBxVol);	// Set focus to Volume box.
 }
 
 double ComputeLength(double vol, double id)
